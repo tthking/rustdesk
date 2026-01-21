@@ -170,7 +170,7 @@ pub static ref T: std::collections::HashMap<&'static str, &'static str> =
         ("Local Port", "Τοπική θύρα"),
         ("Local Address", "Τοπική διεύθυνση"),
         ("Change Local Port", "Αλλαγή τοπικής θύρας"),
-        ("setup_server_tip", "Για πιο γρήγορη σύνδεση, ρυθμίστε τον δικό σας διακομιστή σύνδεσης"),
+        ("setup_server_tip", ""),
         ("Too short, at least 6 characters.", "Πολύ μικρό, τουλάχιστον 6 χαρακτήρες."),
         ("The confirmation is not identical.", "Η επιβεβαίωση δεν είναι πανομοιότυπη."),
         ("Permissions", "Άδειες"),

@@ -170,7 +170,7 @@ pub static ref T: std::collections::HashMap<&'static str, &'static str> =
         ("Local Port", "Ataka lokala"),
         ("Local Address", "Helbide lokala"),
         ("Change Local Port", "Aldatu ataka lokala"),
-        ("setup_server_tip", "Konexio azkarragorako, konfiguratu zure zerbitzaria"),
+        ("setup_server_tip", ""),
         ("Too short, at least 6 characters.", "Laburregia, 6 karaktere gutxienez."),
         ("The confirmation is not identical.", "Berrespena ez dator bat."),
         ("Permissions", "Baimenak"),

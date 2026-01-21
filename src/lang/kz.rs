@@ -170,7 +170,7 @@ pub static ref T: std::collections::HashMap<&'static str, &'static str> =
         ("Local Port", "Лақал Порт"),
         ("Local Address", ""),
         ("Change Local Port", ""),
-        ("setup_server_tip", "Тез қосылым үшін өз серберіңізді орнатуды өтінеміз"),
+        ("setup_server_tip", ""),
         ("Too short, at least 6 characters.", "Тым қысқа, кемінде 6 таңба."),
         ("The confirmation is not identical.", "Растау сәйкес келмейді."),
         ("Permissions", "Рұқсаттар"),
