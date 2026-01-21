@@ -1053,12 +1053,12 @@ pub fn get_api_server(api: String, custom: String) -> String {
     if res.ends_with('/') {
         res.pop();
     }
-    if res.starts_with("http")
-        && res.ends_with(":21114")
-        && get_builtin_option(keys::OPTION_ALLOW_HTTPS_21114) != "Y"
-    {
-        return res.replace(":21114", "");
-    }
+    // if res.starts_with("http")
+    //     && res.ends_with(":21114")
+    //     && get_builtin_option(keys::OPTION_ALLOW_HTTPS_21114) != "Y"
+    // {
+    //     return res.replace(":21114", "");
+    // }
     res
 }
 
@@ -1085,7 +1085,7 @@ fn get_api_server_(api: String, custom: String) -> String {
             return format!("http://{}", s);
         }
     }
-    "http://remote.jddbd.com".to_owned()
+    "http://remote.jddbd.com:21114".to_owned()
 }
 
 #[inline]
