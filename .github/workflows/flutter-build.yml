@@ -726,8 +726,12 @@ jobs:
               brew install pkg-config
           fi
 
+      - name: Install Rosetta 2
+        if: matrix.job.arch == 'aarch64'
+        run: |
+          sudo softwareupdate --install-rosetta --agree-to-license
+
       - name: Install NASM
-        if: matrix.job.arch == 'x86_64'
         run: |
           # Install NASM 2.16.x from official release.
           # Do NOT use `brew install nasm` which installs NASM 3.x.
