@@ -578,7 +578,6 @@ class _GeneralState extends State<_General> {
           isServer: false,
         ),
       ],
-      ],
     ];
 
     // Add client-side wakelock option for desktop platforms
