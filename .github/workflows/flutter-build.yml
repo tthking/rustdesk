@@ -636,6 +636,9 @@ jobs:
           rustc -V
 
       - name: Build rustdesk
+        env:
+          TARGET: ${{ matrix.job.target }}
+          ARCH: ${{ matrix.job.arch }}
         run: |
           if [ "${{ matrix.job.target }}" = "aarch64-apple-darwin" ]; then
             MIN_MACOS_VERSION="12.3"

@@ -403,26 +403,41 @@ def build_deb_from_folder(version, binary_folder):
 
 
 def build_flutter_dmg(version, features):
+    target = os.environ.get("TARGET", "")
+    mac_arch = os.environ.get("ARCH", "")
+    if not mac_arch:
+        if "x86_64" in target:
+            mac_arch = "x86_64"
+        elif "aarch64" in target or "arm64" in target:
+            mac_arch = "arm64"
+        else:
+            mac_arch = 'arm64' if platform.machine().lower() in ('arm64', 'aarch64') else 'x86_64'
+
+    cargo_target_arg = f"--target {target}" if target else ""
+    target_rel_dir = f"target/{target}/release" if target else "target/release"
+
     if not skip_cargo:
         # set minimum osx build target, now is 10.14, which is the same as the flutter xcode project
         system2(
-            f'MACOSX_DEPLOYMENT_TARGET=10.14 cargo build --locked --features {features} --release')
+            f'MACOSX_DEPLOYMENT_TARGET=10.14 cargo build --locked --features {features} --release {cargo_target_arg}')
     # copy dylib
-    system2(
-        "cp target/release/liblibrustdesk.dylib target/release/librustdesk.dylib")
+    if os.path.exists(f"{target_rel_dir}/liblibrustdesk.dylib"):
+        system2(
+            f"cp {target_rel_dir}/liblibrustdesk.dylib {target_rel_dir}/librustdesk.dylib")
+    elif os.path.exists("target/release/liblibrustdesk.dylib"):
+        system2(
+            "cp target/release/liblibrustdesk.dylib target/release/librustdesk.dylib")
+
+    if target and os.path.exists(f"{target_rel_dir}/librustdesk.dylib"):
+        system2(f"mkdir -p target/release && cp -f {target_rel_dir}/librustdesk.dylib target/release/")
+
     os.chdir('flutter')
     # cargo builds a single-arch dylib for the host; restrict Xcode to the same arch
     # so the universal-by-default ARCHS_STANDARD doesn't try to link a missing slice.
     # FLUTTER_XCODE_* env vars are forwarded to xcodebuild as build settings.
-    mac_arch = 'arm64' if platform.machine().lower() in ('arm64', 'aarch64') else 'x86_64'
     system2(
         f'FLUTTER_XCODE_ARCHS={mac_arch} FLUTTER_XCODE_ONLY_ACTIVE_ARCH=YES flutter build macos --release')
-    system2('cp -rf ../target/release/service ./build/macos/Build/Products/Release/RustDesk.app/Contents/MacOS/')
-    '''
-    system2(
-        "create-dmg --volname \"RustDesk Installer\" --window-pos 200 120 --window-size 800 400 --icon-size 100 --app-drop-link 600 185 --icon RustDesk.app 200 190 --hide-extension RustDesk.app rustdesk.dmg ./build/macos/Build/Products/Release/RustDesk.app")
-    os.rename("rustdesk.dmg", f"../rustdesk-{version}.dmg")
-    '''
+    system2(f'cp -rf ../{target_rel_dir}/service ./build/macos/Build/Products/Release/RustDesk.app/Contents/MacOS/ 2>/dev/null || cp -rf ../target/release/service ./build/macos/Build/Products/Release/RustDesk.app/Contents/MacOS/ 2>/dev/null || true')
     os.chdir("..")
 
 
