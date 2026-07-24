@@ -80,7 +80,7 @@
           "platform": "(windows & !arm & static)"
         }
       ],
-      "platform": "((windows | (linux & !arm32) | osx) & static)"
+      "platform": "((windows | (linux & !arm32)) & static) | osx"
     },
     {
       "name": "ffmpeg",
