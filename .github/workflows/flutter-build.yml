@@ -610,9 +610,11 @@ jobs:
           doNotCache: false
 
       - name: Install vcpkg dependencies
+        working-directory: ${{ github.workspace }}
         run: |
           if ! $VCPKG_ROOT/vcpkg \
             install \
+            --manifest-root="${{ github.workspace }}" \
             --triplet ${{ matrix.job.vcpkg-triplet }} \
             --x-install-root="$VCPKG_ROOT/installed"; then
             find "${VCPKG_ROOT}/" -name "*.log" | while read -r _1; do
