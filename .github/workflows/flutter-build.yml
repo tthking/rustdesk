@@ -492,7 +492,7 @@ jobs:
         job:
           - {
               target: x86_64-apple-darwin,
-              os: macos-13,
+              os: macos-latest,
               extra-build-args: "",
               arch: x86_64,
               vcpkg-triplet: x64-osx,
