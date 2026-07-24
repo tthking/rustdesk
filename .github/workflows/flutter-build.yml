@@ -626,8 +626,12 @@ jobs:
             exit 1
           fi
           if [ -d "$VCPKG_ROOT/installed/${{ matrix.job.vcpkg-triplet }}" ]; then
-            ln -sfn "$VCPKG_ROOT/installed/${{ matrix.job.vcpkg-triplet }}" "$VCPKG_ROOT/installed/x64-osx" || true
-            ln -sfn "$VCPKG_ROOT/installed/${{ matrix.job.vcpkg-triplet }}" "$VCPKG_ROOT/installed/x64-osx-static" || true
+            if [ "${{ matrix.job.vcpkg-triplet }}" != "x64-osx" ]; then
+              ln -sfn "$VCPKG_ROOT/installed/${{ matrix.job.vcpkg-triplet }}" "$VCPKG_ROOT/installed/x64-osx" || true
+            fi
+            if [ "${{ matrix.job.vcpkg-triplet }}" != "x64-osx-static" ]; then
+              ln -sfn "$VCPKG_ROOT/installed/${{ matrix.job.vcpkg-triplet }}" "$VCPKG_ROOT/installed/x64-osx-static" || true
+            fi
           fi
           head -n 100 "${VCPKG_ROOT}/buildtrees/ffmpeg/build-${{ matrix.job.vcpkg-triplet }}-rel-out.log" || true
 
