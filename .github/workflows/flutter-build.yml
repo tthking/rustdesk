@@ -495,7 +495,7 @@ jobs:
               os: macos-latest,
               extra-build-args: "",
               arch: x86_64,
-              vcpkg-triplet: x64-osx,
+              vcpkg-triplet: x64-osx-static,
             }
     steps:
       - name: Export GitHub Actions cache environment variables
