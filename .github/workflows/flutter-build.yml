@@ -624,6 +624,10 @@ jobs:
             done
             exit 1
           fi
+          if [ -d "$VCPKG_ROOT/installed/${{ matrix.job.vcpkg-triplet }}" ]; then
+            ln -sfn "$VCPKG_ROOT/installed/${{ matrix.job.vcpkg-triplet }}" "$VCPKG_ROOT/installed/x64-osx" || true
+            ln -sfn "$VCPKG_ROOT/installed/${{ matrix.job.vcpkg-triplet }}" "$VCPKG_ROOT/installed/x64-osx-static" || true
+          fi
           head -n 100 "${VCPKG_ROOT}/buildtrees/ffmpeg/build-${{ matrix.job.vcpkg-triplet }}-rel-out.log" || true
 
       - name: Show version information (Rust, cargo, Clang)
